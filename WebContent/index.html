@@ -85,29 +85,36 @@
 			<h1>Drop your file below</h1>
 			<div class="row">
 				<div class="col-md-12 text-center">
-					<div class="file-input-wrapper" onclick="$('#file-input').click();">
-						<img src="#">
+					<div class="file-input-wrapper" id="ImageDisplay" onclick="$('#file-input').click();">
+						<img src="#" disabled>
 					</div>
 					<input accept="image/*" type="file" id="file-input"
-						onchange="updateFileInputWrapper()">
+					onchange="updateFileInputWrapper()">
+						
 				</div>
 			</div>
 		</div>
 
 	</div>
 	<!-- /container -->
-
 	<script type="text/javascript">
 		$(document).ready(function() {
 
 		});
-		function updateFileInputWrapper() {
-			let
+		function updateFileInputWrapper() { 
+		let
 			file = $('#file-input');
-			console.log(file);
-			$('#file-input-wrapper > img').attr('src', file[0].files[0].name);
-			console.log(file[0].files[0].name);
-		}
+					if (typeof (FileReader) != "undefined"){
+						 var reader = new FileReader();
+	                     reader.onload = function (e) {
+	                            $('#ImageDisplay > img').attr("src", e.target.result);
+
+	                      }
+	                            reader.readAsDataURL(file[0].files[0]);
+					}else {
+		                        alert("This browser does not support FileReader.");
+		                    }
+		};
 	</script>
 
 </body>
