@@ -1,0 +1,132 @@
+<!DOCTYPE html5>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content="" />
+<meta name="author" content="" />
+<link rel="icon" href="/favicon.ico" />
+<title>Postal</title>
+<script src="https://code.jquery.com/jquery-3.2.1.js"
+	integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+	crossorigin="anonymous" type="text/javascript"></script>
+
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous" />
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous" />
+
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous" type="text/javascript"></script>
+</head>
+
+<style>
+#bottom-text::after {
+	display: inline;
+	content: ' ';
+}
+</style>
+
+<body>
+
+	<!-- Fixed navbar -->
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+
+				<a class="navbar-brand" href="#">Postal</a>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+		<!-- Main component for a primary marketing message or call to action -->
+		<div class="jumbotron">
+			<h1>Click below to upload your file</h1>
+			<form method="post" enctype="multipart/form-data" action="/">
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<div class="file-input-wrapper" id="ImageDisplay"
+							onclick="$('#file-input').click();"
+							style="border: 1px dashed #ccc;">
+							<img src="#" disabled="disabled" alt=""
+								style="max-width: 100%; max-height: 500px;" /> <span
+								id="bottom-text">
+								<p id="update"></p>
+							</span>
+
+						</div>
+						<input name="file" accept="image/*" type="file" id="file-input"
+							onchange="updateFileInputWrapper()" />
+					</div>
+					<div class="row">
+						<div class="col-md-1">
+							<button type="submit" id="btn-submit" class="btn btn-primary">Submit</button>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div id="hidden-until-image">
+				<div class="row">
+					<div class="col-md-12">
+						<h3>Modify your image with text!</h3>
+
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<h3>Modify your image with text!</h3>
+
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<input type="text" onblur="botInputChange()"
+							id="bottom-text-input" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!-- /container -->
+	<script type="text/javascript">
+		"use strict";
+		$(document).ready(function() {
+			$('#file-input').hide();
+			$('#hidden-until-image').hide();
+		});
+		function botInputChange() {
+			$('#update').html($('#bottom-text-input').val());
+		}
+		function updateFileInputWrapper() {
+			if (typeof (FileReader) != "undefined") {
+				let reader = new FileReader();
+				reader.onload = function(e) {
+					$('#ImageDisplay > img').attr("src", e.target.result);
+				}
+				reader.readAsDataURL($('#file-input')[0].files[0]);
+				$('#hidden-until-image').show();
+
+			} else {
+				alert("This browser does not support FileReader.");
+			}
+		};
+	</script>
+
+</body>
+</html>
